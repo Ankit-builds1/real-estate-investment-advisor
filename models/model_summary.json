@@ -1,0 +1,108 @@
+{
+  "classification": {
+    "LogisticRegression": {
+      "accuracy": 0.87476,
+      "f1": 0.9107086838728077,
+      "precision": 0.9000563697857948,
+      "recall": 0.9216161616161617,
+      "roc_auc": 0.9424768165602041,
+      "confusion_matrix": [
+        [
+          11804,
+          3546
+        ],
+        [
+          2716,
+          31934
+        ]
+      ]
+    },
+    "RandomForest": {
+      "accuracy": 0.98384,
+      "f1": 0.9883961397058824,
+      "precision": 0.98370590589446,
+      "recall": 0.9931313131313131,
+      "roc_auc": 0.9985194579578944,
+      "confusion_matrix": [
+        [
+          14780,
+          570
+        ],
+        [
+          238,
+          34412
+        ]
+      ]
+    },
+    "XGBoost": {
+      "accuracy": 0.99892,
+      "f1": 0.9992208691637329,
+      "precision": 0.9991055456171736,
+      "recall": 0.9993362193362193,
+      "roc_auc": 0.9999841580063079,
+      "confusion_matrix": [
+        [
+          15319,
+          31
+        ],
+        [
+          23,
+          34627
+        ]
+      ]
+    }
+  },
+  "regression": {
+    "LinearRegression": {
+      "rmse": 11.984667525981179,
+      "mae": 9.007637762916225,
+      "r2": 0.9970245152356352
+    },
+    "RandomForest": {
+      "rmse": 3.1963622383236925,
+      "mae": 2.291001022016633,
+      "r2": 0.9997883502633566
+    },
+    "XGBoost": {
+      "rmse": 1.2433942464941443,
+      "mae": 0.9943987928688048,
+      "r2": 0.9999679724692581
+    }
+  },
+  "best_classifier": "XGBoost",
+  "best_regressor": "XGBoost",
+  "clf_importance": {
+    "BHK": 0.34545,
+    "Availability_Status_Ready_to_Move": 0.18816,
+    "Infrastructure_Score": 0.16787,
+    "Price_per_SqFt": 0.09086,
+    "Age_of_Property": 0.05509,
+    "Property_Type_Villa": 0.03157,
+    "Amenity_Count": 0.02631,
+    "State_Gujarat": 0.00628,
+    "State_Uttar Pradesh": 0.00539,
+    "City_Surat": 0.00407,
+    "City_Pune": 0.00366,
+    "State_Karnataka": 0.00353,
+    "City_New Delhi": 0.00353,
+    "City_Trivandrum": 0.00352,
+    "City_Jamshedpur": 0.00297
+  },
+  "reg_importance": {
+    "Price_in_Lakhs": 0.97068,
+    "Availability_Status_Ready_to_Move": 0.00936,
+    "Infrastructure_Score": 0.00672,
+    "Age_of_Property": 0.00499,
+    "Property_Type_Villa": 0.00445,
+    "Amenity_Count": 0.00368,
+    "Has_Playground": 0.0,
+    "City_Indore": 0.0,
+    "City_Mysore": 0.0,
+    "City_Warangal": 0.0,
+    "City_Chennai": 0.0,
+    "City_Ranchi": 0.0,
+    "State_Kerala": 0.0,
+    "City_Bhopal": 0.0,
+    "City_Dehradun": 0.0
+  }
+}

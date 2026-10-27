@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real Estate Investment Advisor</title>
+  <meta name="description" content="ML-powered real estate investment advisor: predicts whether an Indian property is a good investment and its price after 5 years." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231c2b23'/><path d='M7 16 16 8l9 8v9H7z' fill='none' stroke='%23e0a35e' stroke-width='2.4' stroke-linejoin='round'/></svg>" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  
+
+  <header class="masthead">
+    <div class="wrap mast-row">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16 16 6l11 10v11H5z" /><path d="M12 27v-7h8v7" /></svg>
+        <span>Real Estate Investment Advisor</span>
+      </a>
+      <nav>
+        <a href="#advisor">Advisor</a>
+        <a href="#market">Market</a>
+        <a href="#models">Models</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <p class="eyebrow">ML Capstone Project · <span id="rowsLabel">250,000</span> properties</p>
+      <h1>Real Estate Investment Advisor</h1>
+      <p class="lede">
+        Describe a property. Two machine-learning models, trained on India-wide listings, tell you whether it is a
+        <strong>good investment</strong> and what it is likely to be <strong>worth in five years</strong>.
+      </p>
+      <div class="hero-stats" id="heroStats"></div>
+    </section>
+
+    <section id="advisor" class="wrap advisor">
+      <form id="form" class="ledger" autocomplete="off">
+        <fieldset>
+          <legend>Location</legend>
+          <label>State<select name="State" id="state"></select></label>
+          <label>City<select name="City" id="city"></select></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Property Details</legend>
+          <label class="full">Type
+            <div class="seg" data-name="Property_Type">
+              <button type="button" data-v="Apartment" class="on">Apartment</button>
+              <button type="button" data-v="Independent House">House</button>
+              <button type="button" data-v="Villa">Villa</button>
+            </div>
+          </label>
+          <label>Price (₹ Lakhs)<input type="number" name="Price_in_Lakhs" value="180" min="5" max="1000" step="5" /></label>
+          <label>Size (sq ft)<input type="number" name="Size_in_SqFt" value="1800" min="300" max="10000" step="50" /></label>
+          <label class="range">BHK <output data-for="BHK">3</output><input type="range" name="BHK" min="1" max="5" value="3" /></label>
+          <label class="range">Year built <output data-for="Year_Built">2016</output><input type="range" name="Year_Built" min="1990" max="2025" value="2016" /></label>
+          <label class="range">Floor <output data-for="Floor_No">4</output><input type="range" name="Floor_No" min="0" max="30" value="4" /></label>
+          <label class="range">Total floors <output data-for="Total_Floors">12</output><input type="range" name="Total_Floors" min="1" max="30" value="12" /></label>
+          <label>Furnishing<select name="Furnished_Status"><option>Unfurnished</option><option selected>Semi-furnished</option><option>Furnished</option></select></label>
+          <label>Facing<select name="Facing"><option>North</option><option>South</option><option selected>East</option><option>West</option></select></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Neighbourhood</legend>
+          <label class="range">Nearby schools <output data-for="Nearby_Schools">6</output><input type="range" name="Nearby_Schools" min="1" max="10" value="6" /></label>
+          <label class="range">Nearby hospitals <output data-for="Nearby_Hospitals">5</output><input type="range" name="Nearby_Hospitals" min="1" max="10" value="5" /></label>
+          <label class="full">Public transport
+            <div class="seg" data-name="Public_Transport_Accessibility">
+              <button type="button" data-v="Low">Low</button>
+              <button type="button" data-v="Medium">Medium</button>
+              <button type="button" data-v="High" class="on">High</button>
+            </div>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Status &amp; Features</legend>
+          <label class="full">Availability
+            <div class="seg" data-name="Availability_Status">
+              <button type="button" data-v="Ready_to_Move" class="on">Ready to move</button>
+              <button type="button" data-v="Under_Construction">Under construction</button>
+            </div>
+          </label>
+          <label>Seller<select name="Owner_Type"><option>Owner</option><option>Builder</option><option>Broker</option></select></label>
+          <div class="toggles">
+            <label class="chk"><input type="checkbox" name="Parking_Space" checked /><span>Parking</span></label>
+            <label class="chk"><input type="checkbox" name="Security" checked /><span>Security</span></label>
+          </div>
+          <div class="full amen" id="amenities">
+            <span class="amen-label">Amenities</span>
+            <label class="chip"><input type="checkbox" value="Gym" checked /><span>Gym</span></label>
+            <label class="chip"><input type="checkbox" value="Pool" /><span>Pool</span></label>
+            <label class="chip"><input type="checkbox" value="Clubhouse" /><span>Clubhouse</span></label>
+            <label class="chip"><input type="checkbox" value="Garden" checked /><span>Garden</span></label>
+            <label class="chip"><input type="checkbox" value="Playground" /><span>Playground</span></label>
+          </div>
+        </fieldset>
+      </form>
+
+      <aside class="deed" id="deed" aria-live="polite">
+        <div class="deed-head">
+          <span>Prediction Result</span>
+          <span id="deedNo">No. 0001</span>
+        </div>
+        <div class="verdict">
+          <div class="stamp" id="stamp"><span id="stampText">GOOD<br />INVESTMENT</span></div>
+          <div>
+            <p class="small">Model verdict</p>
+            <h2 id="verdict">—</h2>
+            <div class="meter"><i id="meterFill"></i></div>
+            <p class="small"><span id="confidence">—</span> confidence</p>
+          </div>
+        </div>
+        <div class="figures">
+          <div><p class="small">Price today</p><p class="num" id="nowPrice">—</p></div>
+          <div class="arrow">→</div>
+          <div><p class="small">In 5 years</p><p class="num big" id="futurePrice">—</p></div>
+        </div>
+        <p class="gain" id="gain"></p>
+        <svg id="growthChart" class="growth" viewBox="0 0 400 140" preserveAspectRatio="none" role="img" aria-label="Projected price over five years"></svg>
+        <div class="checks" id="checks"></div>
+        <p class="fine">XGBoost models running in your browser · trained on synthetic-style Indian housing data · not financial advice.</p>
+      </aside>
+    </section>
+
+    <section id="market" class="wrap section">
+      <div class="sec-head">
+        
+        <h2>Market Insights (EDA)</h2>
+        <p>Patterns found while exploring the dataset.</p>
+      </div>
+      <div class="grid-2">
+        <article class="panel">
+          <h3>Transport is the strongest signal</h3>
+          <p class="note">Share of properties rated a good investment, by public transport access.</p>
+          <div id="transportChart" class="bars big"></div>
+        </article>
+        <article class="panel">
+          <h3>Ready-to-move beats under-construction</h3>
+          <p class="note">Good-investment share by availability and BHK.</p>
+          <div id="statusChart" class="bars"></div>
+          <div id="bhkChart" class="cols"></div>
+        </article>
+        <article class="panel">
+          <h3>Average price per sq ft, by state</h3>
+          <p class="note">Differences between states are small: within about 3%.</p>
+          <div id="stateChart" class="bars dense"></div>
+        </article>
+        <article class="panel">
+          <h3>Cities ranked by good-investment share</h3>
+          <p class="note">Top and bottom five of <span id="cityCount">42</span> cities.</p>
+          <div id="cityChart" class="bars dense"></div>
+          <h3 class="mt">Distribution of expected annual growth</h3>
+          <svg id="histChart" class="hist" viewBox="0 0 400 120" preserveAspectRatio="none"></svg>
+          <div class="hist-axis"><span id="histMin"></span><span>annual growth %</span><span id="histMax"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="models" class="wrap section">
+      <div class="sec-head">
+        
+        <h2>Model Performance</h2>
+        <p>Six models compared and tracked in MLflow on a 20% held-out test set (50,000 properties).</p>
+      </div>
+      <div class="grid-2">
+        <article class="panel">
+          <h3>Good Investment · classification</h3>
+          <table class="tbl" id="clfTable"></table>
+          <h3 class="mt">What drives the verdict</h3>
+          <div id="clfImp" class="bars dense"></div>
+        </article>
+        <article class="panel">
+          <h3>Price in 5 years · regression</h3>
+          <table class="tbl" id="regTable"></table>
+          <h3 class="mt">What drives the future price</h3>
+          <div id="regImp" class="bars dense"></div>
+        </article>
+      </div>
+      <article class="panel method">
+        <h3>How the targets were built</h3>
+        <div class="grid-2 inner">
+          <div>
+            <p><strong>Future price.</strong> Future = Price × (1 + r)<sup>5</sup>. The rate r starts at 8% a year and is adjusted for infrastructure (up to ±2%), under-construction status (+1%), age over 25 years (−1%), each amenity (+0.2%) and villas (+0.5%).</p>
+          </div>
+          <div>
+            <p><strong>Good investment.</strong> A property gets one point each for: price per sq ft at or below its city's median · 3 or more BHK · ready to move · infrastructure score ≥ 0.5 · growth ≥ 8%. A score of 3 or more is rated good.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <span>Real Estate Investment Advisor · Labmentix Capstone · Python · scikit-learn · XGBoost · MLflow</span>
+    <span>Built by Ankit Dash</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
