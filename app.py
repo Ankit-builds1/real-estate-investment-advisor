@@ -25,7 +25,7 @@ def load_models():
 
 @st.cache_data
 def load_data():
-    return pd.read_csv(ROOT / "data" / "processed" / "housing_processed.csv")
+    return pd.read_csv(ROOT / "data" / "app" / "app_data.csv.gz")
 
 
 clf, reg, meta, summary = load_models()

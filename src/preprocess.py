@@ -9,6 +9,7 @@ from features import add_features, add_targets, clean
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw" / "india_housing_prices.csv"
 OUT = ROOT / "data" / "processed" / "housing_processed.csv"
+APP = ROOT / "data" / "app" / "app_data.csv.gz"
 
 
 def iqr_outliers(s: pd.Series) -> pd.Series:
@@ -37,6 +38,13 @@ def main():
     df.to_csv(OUT, index=False)
     print(f"Processed shape: {df.shape} -> {OUT}")
     print(f"Good_Investment share: {df['Good_Investment'].mean():.2%}")
+
+    # Small compressed copy with only the columns the Streamlit app needs (committed to GitHub for deployment)
+    app_cols = ["State", "City", "Locality", "Property_Type", "BHK", "Size_in_SqFt", "Price_in_Lakhs",
+                "Price_per_SqFt", "Year_Built", "Future_Price_5Y", "Good_Investment"]
+    APP.parent.mkdir(parents=True, exist_ok=True)
+    df[app_cols].to_csv(APP, index=False, compression="gzip")
+    print(f"App data -> {APP}")
 
     # Lookup tables the Streamlit app needs
     meta = {
